@@ -1,4 +1,5 @@
 const app = require('./server/app')
+
 const PORT = process.env.PORT || 5000
 
 app.on('ready', () => {
