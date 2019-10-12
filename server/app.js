@@ -1,8 +1,6 @@
 const express = require('express')
-
-require('./db/connection')() // connecting db
-
 const app = express()
+require('./db/connection')(app) // connecting db
 
 // body parsing middleware for json
 app.use(express.json({ extended: false }))
