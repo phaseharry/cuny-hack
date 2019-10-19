@@ -1,29 +1,55 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../actions/index.js'
+import { Menu, Search } from 'semantic-ui-react'
+import styled from 'styled-components'
 
-const items = [{
-    name: 'apple',
-    price: 399
-}, {
-    name: 'melon',
-    price: 499
-}, {
-    name: 'ass',
-    price: 9001
-}]
+const SearchWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 10px;
+`
 
 function Home() {
     const [ inputName, setInputName ] = useState('')
     const [ inputPrice, setInputPrice ] = useState('')
+    const [ searchInputName, setSearchInputName ] = useState('')
     /** @type {String[]} */
     const listings = useSelector(state => state.listings)
+    const filteredListings = searchInputName ? listings.filter(item => item.name.toLowerCase().includes(searchInputName.toLowerCase())) : listings
     const dispatch = useDispatch()
+    const foodNames = new Set()
+    listings.forEach(item => {
+        if (item.name.toLowerCase().includes(searchInputName.toLowerCase())) {
+            foodNames.add(item.name)
+        }
+    })
 
     return <div>
-        { listings.length} items
+        <Menu>
+            <Menu.Item name='editorials'>
+            Editorials
+            </Menu.Item>
+            <Menu.Item name='reviews'>
+            Reviews
+            </Menu.Item>
+            <Menu.Item name='upcomingEvents'>
+            Upcoming Events
+            </Menu.Item>
+        </Menu>
+        <SearchWrapper>
+            <Search size='massive'
+                onResultSelect={(e, data) => {
+                    console.log(data)
+                    setSearchInputName(data.result.title)}}
+                results={Array.from(foodNames).map(name => ({ title: name }))}
+                value={searchInputName}
+                onSearchChange={(e, data) => setSearchInputName(data.value)} />
+        </SearchWrapper>
+        { listings.length} items, after filtered: {filteredListings.length}
         <br />
-        { listings.map((item, i) => <div key={i}><h1>Name: {item.name}<br />Price: {item.price}</h1></div>) }
+        { filteredListings.map((item, i) => <div key={i}><h1>Name: {item.name}<br />Price: {item.price}</h1></div>) }
         <input placeholder='item name' value={inputName} onChange={e => setInputName(e.target.value)} />
         <br />
         <input placeholder='item price' value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
