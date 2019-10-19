@@ -6,6 +6,8 @@ import styled from 'styled-components'
 import logo from '../../InstaPrice Logos/logo.png';
 
 
+import Map from './Map'
+
 const SearchWrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -19,10 +21,9 @@ const LogoStyle = styled.div`
 `
 
 function Home() {
-    const [ inputName, setInputName ] = useState('')
-    const [ inputPrice, setInputPrice ] = useState('')
-    const [ searchInputName, setSearchInputName ] = useState('')
-    // const [ searching, setSearching ] = useState(false)
+    const [inputName, setInputName] = useState('')
+    const [inputPrice, setInputPrice] = useState('')
+    const [searchInputName, setSearchInputName] = useState('')
     /** @type {String[]} */
     const listings = useSelector(state => state.listings)
     const filteredListings = searchInputName ? listings.filter(item => item.name.toLowerCase().includes(searchInputName.toLowerCase())) : listings
@@ -33,10 +34,9 @@ function Home() {
             foodNames.add(item.name)
         }
     })
-
     return <div>
         <LogoStyle>
-            <img src = {logo} width="150" height="150"></img>
+            <img src={logo} width="150" height="150"></img>
         </LogoStyle>
         <SearchWrapper>
             <Search size='massive'
@@ -45,9 +45,9 @@ function Home() {
                 value={searchInputName}
                 onSearchChange={(e, data) => setSearchInputName(data.value)} />
         </SearchWrapper>
-        { listings.length} items, after filtered: {filteredListings.length}
+        {listings.length} items, after filtered: {filteredListings.length}
         <br />
-        { filteredListings.map((item, i) => <div key={i}><h1>Name: {item.name}<br />Price: {item.price}</h1></div>) }
+        {filteredListings.map((item, i) => <div key={i}><h1>Name: {item.name}<br />Price: {item.price}</h1></div>)}
         <input placeholder='item name' value={inputName} onChange={e => setInputName(e.target.value)} />
         <br />
         <input placeholder='item price' value={inputPrice} onChange={e => setInputPrice(e.target.value)} />
@@ -61,6 +61,7 @@ function Home() {
             setInputName('')
             setInputPrice('')
         }}>Click me to add a listing</button>
+        <Map />
     </div>
 }
 
