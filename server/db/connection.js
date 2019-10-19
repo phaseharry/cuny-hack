@@ -9,7 +9,7 @@ const connectToDb = expressApp => {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
   })
     .then(() => {
       expressApp.emit('ready')
