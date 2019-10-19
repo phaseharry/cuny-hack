@@ -1,6 +1,6 @@
 import actions from '../constants/redux-actions.js'
 
-const { ADD_ITEM, INITIALIZE_STATE, REMOVE_ITEM} = actions
+const { ADD_ITEM, INITIALIZE_STATE, REMOVE_ITEM } = actions
 
 /**
  * @typedef InitialLoad
