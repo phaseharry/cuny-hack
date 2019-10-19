@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { initState } from '../actions/index.js'
 import Home from './Home.js'
 import Product from './Product.js'
-import { Switch, Route, useHistory } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 
 const App = () => {
   const listings = useSelector(state => state.listings)
   const dispatch = useDispatch()
-
+  // 40.740582, -73.984739
   useEffect(() => {
     if (listings.length > 0) return
-    fetch('/api/foods').then(res => {
+    fetch('/api/foods/search?longitude=40.740582&latitude=73.984739&range=2').then(res => {
       if (res.status !== 200) {
         throw new Error(`Non-200 status code ${res.status}`)
       }
@@ -24,7 +24,6 @@ const App = () => {
   return (
     <div className="App">
       <h1>Hello World</h1>
-      <Home />
       <Switch>
         <Route exact to='/' component={Home} />
         <Route to='/product/:name' component={Product} />
