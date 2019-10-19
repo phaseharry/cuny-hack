@@ -8,7 +8,7 @@ import { Switch, Route } from 'react-router-dom'
 const App = () => {
   const listings = useSelector(state => state.listings)
   const dispatch = useDispatch()
-  // 40.740582, -73.984739
+
   useEffect(() => {
     if (listings.length > 0) return
     fetch('/api/foods/search?longitude=40.740582&latitude=73.984739&range=2').then(res => {
@@ -24,11 +24,11 @@ const App = () => {
   return (
     <div className="App">
       <Switch>
-        <Route exact to='/' component={Home} />
-        <Route to='/product/:name' component={Product} />
+        <Route exact path='/' component={Home} />
+        <Route path='/product/:name' component={Product} />
       </Switch>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

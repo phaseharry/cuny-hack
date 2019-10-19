@@ -36,7 +36,6 @@ export function removeItem(data) {
 }
 
 /**
- * 
  * @param {NewItemData} data
  */
 export function addItem(data) {
