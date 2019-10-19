@@ -1,9 +1,16 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { initState } from '../actions/index.js'
+import styled from 'styled-components'
 import Home from './Home.js'
+import logo from '../../InstaPrice Logos/logo.png';
 
-const App = () => {
+
+const CenterLogo = styled.div`
+  text-align: center;
+  `
+
+  const App = () => {
   const listings = useSelector(state => state.listings)
   const dispatch = useDispatch()
 
@@ -22,7 +29,9 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Hello World</h1>
+      <CenterLogo>
+      <img src={logo} width="150" height="150" />
+      </CenterLogo>
       <Home />
     </div>
   );
