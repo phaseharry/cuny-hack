@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useSelector } from 'react-redux'
 import { Input } from 'semantic-ui-react'
 import styled from 'styled-components'
 import logo from '../../InstaPrice Logos/logo.png'
@@ -23,34 +22,17 @@ const LogoStyle = styled.div`
 function Home() {
     const history = useHistory()
     const [ searchInputName, setSearchInputName ] = useState('')
-    const [ searching, setSearching ] = useState(false)
     /** @type {String[]} */
-    const listings = useSelector(state => state.listings)
-    const foodNames = new Set()
-    listings.forEach(item => {
-        if (item.name.toLowerCase().includes(searchInputName.toLowerCase())) {
-            foodNames.add(item.name)
-        }
-    })
     return <div>
         <LogoStyle>
             <img src={logo} width="150" height="150"></img>
         </LogoStyle>
         <SearchWrapper>
-            <Input size='massive' onChange={e => setSearchInputName(e.target.value)} icon='search' loading={searching} placeholder='Search a Food' onKeyDown={e => {
+            <Input size='massive' onChange={e => setSearchInputName(e.target.value)} icon='search' placeholder='Search a Food' onKeyDown={e => {
                 if (e.key !== 'Enter') {
                     return
                 }
-                setSearching(true)
-                fetch('/api/foods/search?longitude=40.740582&latitude=73.984739&range=2').then(res => {
-                    if (res.status !== 200) {
-                      throw new Error(`Non-200 status code ${res.status}`)
-                    }
-                    setSearching(false)
-                    return res.json()
-                  }).then(data => {
-                      history.push({ pathname: `/product/${searchInputName}`, state: { data } })
-                  }).catch(console.error)
+                history.push({ pathname: `/product/${searchInputName}`})
             }} />
         </SearchWrapper>
     </div>
