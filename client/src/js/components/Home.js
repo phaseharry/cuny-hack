@@ -6,6 +6,8 @@ import logo from '../../InstaPrice Logos/logo.png'
 import { useHistory } from 'react-router-dom'
 
 
+import Map from './Map'
+
 const SearchWrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -30,11 +32,9 @@ function Home() {
             foodNames.add(item.name)
         }
     })
-    
-
     return <div>
         <LogoStyle>
-            <img src = {logo} width="150" height="150"></img>
+            <img src={logo} width="150" height="150"></img>
         </LogoStyle>
         <SearchWrapper>
             <Input size='massive' onChange={e => setSearchInputName(e.target.value)} icon='search' loading={searching} placeholder='Search a Food' onKeyDown={e => {
