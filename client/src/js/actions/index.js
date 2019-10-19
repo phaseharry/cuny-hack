@@ -1,6 +1,6 @@
 import actions from '../constants/redux-actions.js'
 
-const { ADD_ITEM, INITIALIZE_STATE} = actions
+const { ADD_ITEM, INITIALIZE_STATE, REMOVE_ITEM} = actions
 
 /**
  * @typedef InitialLoad
@@ -26,6 +26,14 @@ export function initState(data) {
  * @typedef RemoveItemData
  * @property {String} id
  */
+
+ /**
+  * 
+  * @param {RemoveItemData} data
+  */
+export function removeItem(data) {
+    return { type: REMOVE_ITEM, data}
+}
 
 /**
  * 
