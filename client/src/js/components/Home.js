@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../actions/index.js'
-import { Menu, Search } from 'semantic-ui-react'
+import { Search } from 'semantic-ui-react'
 import styled from 'styled-components'
 import logo from '../../InstaPrice Logos/logo.png';
 
@@ -22,6 +22,7 @@ function Home() {
     const [ inputName, setInputName ] = useState('')
     const [ inputPrice, setInputPrice ] = useState('')
     const [ searchInputName, setSearchInputName ] = useState('')
+    // const [ searching, setSearching ] = useState(false)
     /** @type {String[]} */
     const listings = useSelector(state => state.listings)
     const filteredListings = searchInputName ? listings.filter(item => item.name.toLowerCase().includes(searchInputName.toLowerCase())) : listings
@@ -34,25 +35,12 @@ function Home() {
     })
 
     return <div>
-        <Menu>
-            <Menu.Item name='editorials'>
-            Editorials
-            </Menu.Item>
-            <Menu.Item name='reviews'>
-            Reviews
-            </Menu.Item>
-            <Menu.Item name='upcomingEvents'>
-            Upcoming Events
-            </Menu.Item>
-        </Menu>
         <LogoStyle>
             <img src = {logo} width="150" height="150"></img>
-        </LogoStyle> 
+        </LogoStyle>
         <SearchWrapper>
             <Search size='massive'
-                onResultSelect={(e, data) => {
-                    console.log(data)
-                    setSearchInputName(data.result.title)}}
+                onResultSelect={(e, data) => setSearchInputName(data.result.title)}
                 results={Array.from(foodNames).map(name => ({ title: name }))}
                 value={searchInputName}
                 onSearchChange={(e, data) => setSearchInputName(data.value)} />
