@@ -21,9 +21,9 @@ function Home() {
     const dispatch = useDispatch()
 
     return <div>
-        { listings.length + items.length } items
+        { listings.length} items
         <br />
-        { items.concat(listings).map((item, i) => <div key={i}><h1>Name: {item.name}<br />Price: {item.price}</h1></div>) }
+        { listings.map((item, i) => <div key={i}><h1>Name: {item.name}<br />Price: {item.price}</h1></div>) }
         <input placeholder='item name' value={inputName} onChange={e => setInputName(e.target.value)} />
         <br />
         <input placeholder='item price' value={inputPrice} onChange={e => setInputPrice(e.target.value)} />

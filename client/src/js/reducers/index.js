@@ -30,6 +30,13 @@ const reducers = {
      */
     [actions.ADD_ITEM]: (state, data) => {
         return { ...state, listings: [ ...state.listings, data ] }
+    },
+    /**
+     * @param {Object} state
+     * @param {import('../actions/index.js').InitialLoad} data
+     */
+    [actions.INITIALIZE_STATE]: (state, data) => {
+        return { ...state, listings: data.listings }
     }
 }
 
