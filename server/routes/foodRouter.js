@@ -15,12 +15,16 @@ Router.get('/', (req, res, next) => {
 })
 
 /*
-  @route          GET api/foods/search?
+  @route          GET api/foods/search?longitude=40.23232&latitude=74.521322&food=strawberries&range=4.2
   @description    fetches a specific foods within a specified distance from you
   @access         public
 */
-Router.get('/search', async (req, res, next) => {
+Router.get('/search?', async (req, res, next) => {
   let { longitude, latitude, food, range } = req.query
+
+  if (!food) { // if  there is no food query then we go to the next search
+    return next()
+  }
   // converting to type numb
   range *= 1
   longitude *= 1
@@ -53,17 +57,41 @@ Router.get('/search', async (req, res, next) => {
 })
 
 /*
-  @route          GET api/foods/search/:latitude/:longitude
+  @route          GET api/foods/search?longitude=40.23232&latitude=74.521322
   @description    fetches all food within a specified distance from you
   @access         public
 */
-Router.get('/search/:latitude/:longitude/:range', (req, res, next) => {
-  const { latitude, longitude, range } = req.params
-  res.json({
-    latitude,
-    longitude,
-    range
-  })
+Router.get('/search?', async (req, res, next) => {
+  let { latitude, longitude, range } = req.query
+
+  // converting to type numb
+  range *= 1
+  longitude *= 1
+  latitude *= 1
+
+  try {
+    const foodData = await Food.find({
+      longitude: {
+        $gte: longitude - range,
+        $lt: longitude + range
+      },
+      latitude: {
+        $gte: latitude - range,
+        $lt: latitude + range
+      }
+    })
+
+    if (foodData.length) {
+      res.status(200).json(foodData)
+    } else {
+      res.status(200).json({
+        msg: 'No food found within that range'
+      })
+    }
+
+  } catch (err) {
+    next(err)
+  }
 })
 
 /*
@@ -92,7 +120,7 @@ Router.post('/', [
 
   try {
     const foodInstance = await Food.findOne({
-      name,
+      name: name.toLowerCase(),
       longitude,
       latitude
     })
@@ -104,7 +132,7 @@ Router.post('/', [
     }
 
     const newFoodInstance = new Food({
-      name,
+      name: name.toLowerCase(),
       price,
       longitude,
       latitude
