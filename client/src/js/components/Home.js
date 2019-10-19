@@ -20,7 +20,6 @@ function Home() {
     const listings = useSelector(state => state.listings)
     const dispatch = useDispatch()
 
-    listings
     return <div>
         { listings.length + items.length } items
         <br />
