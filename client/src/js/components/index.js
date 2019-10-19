@@ -5,7 +5,10 @@ import Home from './Home.js'
 import Product from './Product.js'
 import { Switch, Route } from 'react-router-dom'
 
-const App = () => {
+
+
+
+  const App = () => {
   const listings = useSelector(state => state.listings)
   const dispatch = useDispatch()
   // 40.740582, -73.984739
@@ -23,7 +26,6 @@ const App = () => {
 
   return (
     <div className="App">
-      <h1>Hello World</h1>
       <Switch>
         <Route exact to='/' component={Home} />
         <Route to='/product/:name' component={Product} />
