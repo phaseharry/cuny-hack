@@ -1,7 +1,43 @@
 const mongoose = require('mongoose')
+const faker = require('faker')
 
 // models
 const User = require('./models/User')
+const Food = require('./models/Food')
+
+const listOfFoods = [
+  'Lobster', 
+  'Salmon', 
+  'Herring', 
+  'Broccoli', 
+  'Corn', 
+  'Chicken', 
+  'Duck', 
+  'Strawberries', 
+  'Blueberries', 
+  'Bananas', 
+  'Blackberries', 
+  'Crabs', 
+  'Coconut', 
+  'Bok Choy', 
+  'Lettuce', 
+  'Pineapples', 
+  'Onions', 
+  'Cauliflower', 
+  'Cabbage', 
+  'Turnip', 
+  'Chives', 
+  'Ginger', 
+  'Carrots', 
+  'Oranges', 
+  'Lemons', 
+  'Limes'
+]
+
+const NEW_YORK_COORDINATES = {
+  longitude: '40.7128',
+  latitude: '74.0060'
+}
 
 const dropDbAndSeed = async () => {
   try {
@@ -36,6 +72,18 @@ const dropDbAndSeed = async () => {
       })
     ]
     await Promise.all([harry.save(), oscar.save(), michael.save(), matthew.save()])
+
+    for(let i = 0; i < 200; i++){
+      const newFoodInstance = new Food({
+        name: listOfFoods[Math.floor(Math.random() * (listOfFoods.length - 0))],
+        price: (Math.random() * (35.5 - 1 + 1) + 1).toPrecision(3),
+        latitude: NEW_YORK_COORDINATES.latitude,  // using constant coordinates because don't know scale of each decimal change
+        longitude: NEW_YORK_COORDINATES.longitude,
+        imageUrl: faker.image.food()
+      })
+
+      await newFoodInstance.save()
+    }
 
     await mongoose.connection.close()
     console.log('Seed successful')
