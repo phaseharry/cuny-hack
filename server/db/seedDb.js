@@ -113,8 +113,8 @@ const listOfFoods = [
 ]
 
 const NEW_YORK_COORDINATES = {
-  longitude: '40.7128',
-  latitude: '74.0060'
+  longitude: 40.7128,
+  latitude: 74.0060
 }
 
 const dropDbAndSeed = async () => {
@@ -153,12 +153,14 @@ const dropDbAndSeed = async () => {
 
     for (let i = 0; i < 200; i++) {
       const randFood = listOfFoods[Math.floor(Math.random() * (listOfFoods.length - 0))]
+      const latitudeRand = +((Math.random() * 10) - 5).toPrecision(9)
+      const longitudeRand = +((Math.random() * 10) - 5).toPrecision(9)
       const newFoodInstance = new Food({
         name: randFood.name,
         category: randFood.type,
         price: (Math.random() * (35.5 - 1 + 1) + 1).toPrecision(3),
-        latitude: NEW_YORK_COORDINATES.latitude,  // using constant coordinates because don't know scale of each decimal change
-        longitude: NEW_YORK_COORDINATES.longitude,
+        latitude: NEW_YORK_COORDINATES.latitude + latitudeRand,
+        longitude: NEW_YORK_COORDINATES.longitude + longitudeRand,
         imageUrl: faker.image.food()
       })
       await newFoodInstance.save()

@@ -14,11 +14,11 @@ const FoodSchema = mongoose.Schema({
     required: true
   },
   longitude: {
-    type: String,
+    type: Number,
     required: true
   },
   latitude: {
-    type: String,
+    type: Number,
     required: true
   },
   imageUrl: {
