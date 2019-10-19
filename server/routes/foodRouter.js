@@ -67,7 +67,7 @@ Router.get('/search?', [
 
 /*
   @route          GET api/foods/search?longitude=40.23232&latitude=74.521322&food=strawberries&range=4.2
-  @description    fetches a specific foods within a specified distance from you
+  @description    fetches a specific food within a specified distance from you
   @access         public
 */
 Router.get('/search?', [
@@ -90,7 +90,7 @@ Router.get('/search?', [
 
   try {
     const foodData = await Food.find({
-      name: food,
+      name: food.toLowerCase(),
       longitude: {
         $gte: longitude - range,
         $lt: longitude + range

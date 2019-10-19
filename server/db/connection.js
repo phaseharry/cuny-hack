@@ -5,7 +5,6 @@ const mongoose = require('mongoose')
  * @param {import('express').Express} expressApp 
  */
 const connectToDb = expressApp => {
-  mongoose.set('debug', true)
   mongoose.connect('mongodb://localhost:27017/devdb', {
     useNewUrlParser: true,
     useCreateIndex: true,
