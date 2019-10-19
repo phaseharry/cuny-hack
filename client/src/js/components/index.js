@@ -2,6 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { initState } from '../actions/index.js'
 import Home from './Home.js'
+import Product from './Product.js'
+import { Switch, Route, useHistory } from 'react-router-dom'
 
 const App = () => {
   const listings = useSelector(state => state.listings)
@@ -15,7 +17,6 @@ const App = () => {
       }
       return res.json()
     }).then(data => {
-      console.log('g')
       dispatch(initState({ listings: data }))
     }).catch(console.error)
   }, [dispatch, listings])
@@ -24,6 +25,10 @@ const App = () => {
     <div className="App">
       <h1>Hello World</h1>
       <Home />
+      <Switch>
+        <Route exact to='/' component={Home} />
+        <Route to='/product/:name' component={Product} />
+      </Switch>
     </div>
   );
 }
