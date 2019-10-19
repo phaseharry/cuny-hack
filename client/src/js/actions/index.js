@@ -1,6 +1,18 @@
 import actions from '../constants/redux-actions.js'
 
-const { ADD_ITEM } = actions
+const { ADD_ITEM, INITIALIZE_STATE} = actions
+
+/**
+ * @typedef InitialLoad
+ * @property {Object[]} listings
+ */
+
+/**
+ * @param {InitialLoad} data 
+ */
+export function initState(data) {
+    return { type: INITIALIZE_STATE, data }
+}
 
 /**
  * 
