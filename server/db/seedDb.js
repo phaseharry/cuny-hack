@@ -113,8 +113,8 @@ const listOfFoods = [
 ]
 
 const NEW_YORK_COORDINATES = {
-  longitude: 40.7128,
-  latitude: 74.0060
+  longitude: -74.0060,
+  latitude: 40.7128
 }
 
 const dropDbAndSeed = async () => {
