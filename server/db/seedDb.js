@@ -6,32 +6,110 @@ const User = require('./models/User')
 const Food = require('./models/Food')
 
 const listOfFoods = [
-  'Lobster', 
-  'Salmon', 
-  'Herring', 
-  'Broccoli', 
-  'Corn', 
-  'Chicken', 
-  'Duck', 
-  'Strawberries', 
-  'Blueberries', 
-  'Bananas', 
-  'Blackberries', 
-  'Crabs', 
-  'Coconut', 
-  'Bok Choy', 
-  'Lettuce', 
-  'Pineapples', 
-  'Onions', 
-  'Cauliflower', 
-  'Cabbage', 
-  'Turnip', 
-  'Chives', 
-  'Ginger', 
-  'Carrots', 
-  'Oranges', 
-  'Lemons', 
-  'Limes'
+  {
+    name: 'Lobster',
+    type: 'seafood'
+  },
+  {
+    name: 'Salmon',
+    type: 'seafood'
+  },
+  {
+    name: 'Herring',
+    type: 'seafood'
+  },
+  {
+    name: 'Broccoli',
+    type: 'vegetable'
+  },
+  {
+    name: 'Corn',
+    type: 'vegetable'
+  },
+  {
+    name: 'Chicken',
+    type: 'meat'
+  },
+  {
+    name: 'Duck',
+    type: 'meat'
+  },
+  {
+    name: 'Strawberries',
+    type: 'fruit'
+  },
+  {
+    name: 'Blueberries',
+    type: 'fruit'
+  },
+  {
+    name: 'Bananas',
+    type: 'fruit'
+  },
+  {
+    name: 'Blackberries',
+    type: 'fruit'
+  },
+  {
+    name: 'Crabs',
+    type: 'seafood'
+  },
+  {
+    name: 'Coconut',
+    type: 'fruit'
+  },
+  {
+    name: 'Bok Choy',
+    type: 'vegetable'
+  },
+  {
+    name: 'Lettuce',
+    type: 'vegetable'
+  },
+  {
+    name: 'Pineapples',
+    type: 'fruit'
+  },
+  {
+    name: 'Onions',
+    type: 'vegetable'
+  },
+  {
+    name: 'Cauliflower',
+    type: 'vegetable'
+  },
+  {
+    name: 'Cabbage',
+    type: 'vegetable'
+  },
+  {
+    name: 'Turnip',
+    type: 'vegetable'
+  },
+  {
+    name: 'Chives',
+    type: 'vegetable'
+  },
+  {
+    name: 'Ginger',
+    type: 'vegetable'
+  },
+  {
+    name: 'Carrots',
+    type: 'vegetable'
+  },
+  {
+    name: 'Oranges',
+    type: 'fruit'
+  },
+  {
+    name: 'Lemons',
+    type: 'fruit'
+  },
+  {
+    name: 'Limes',
+    type: 'fruit'
+  }
 ]
 
 const NEW_YORK_COORDINATES = {
@@ -73,15 +151,16 @@ const dropDbAndSeed = async () => {
     ]
     await Promise.all([harry.save(), oscar.save(), michael.save(), matthew.save()])
 
-    for(let i = 0; i < 200; i++){
+    for (let i = 0; i < 200; i++) {
+      const randFood = listOfFoods[Math.floor(Math.random() * (listOfFoods.length - 0))]
       const newFoodInstance = new Food({
-        name: listOfFoods[Math.floor(Math.random() * (listOfFoods.length - 0))],
+        name: randFood.name,
+        category: randFood.type,
         price: (Math.random() * (35.5 - 1 + 1) + 1).toPrecision(3),
         latitude: NEW_YORK_COORDINATES.latitude,  // using constant coordinates because don't know scale of each decimal change
         longitude: NEW_YORK_COORDINATES.longitude,
         imageUrl: faker.image.food()
       })
-
       await newFoodInstance.save()
     }
 

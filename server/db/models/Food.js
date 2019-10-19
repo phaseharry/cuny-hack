@@ -5,6 +5,10 @@ const FoodSchema = mongoose.Schema({
     type: String,
     requred: true
   },
+  category: {
+    type: String,
+    required: true
+  },
   price: {
     type: String,
     required: true
