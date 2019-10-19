@@ -37,6 +37,15 @@ const reducers = {
      */
     [actions.INITIALIZE_STATE]: (state, data) => {
         return { ...state, listings: data.listings }
+    },
+    /**
+     * @param {Object} state
+     * @param {import('../actions/index.js').RemoveItemData} data
+     */
+    [actions.REMOVE_ITEM]: (state, data) => {
+        const id = data.id
+
+        return {  ...state, listings: state.data.filter(data => data.id !== id) }
     }
 }
 
