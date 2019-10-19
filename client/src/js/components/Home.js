@@ -13,7 +13,7 @@ const SearchWrapper = styled.div`
     padding: 60px 10px;
 `
 const LogoStyle = styled.div`
-     display: flex;
+    display: flex;
     justify-content: center;
     align-items: center;
 `
