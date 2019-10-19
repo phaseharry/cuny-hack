@@ -5,11 +5,15 @@ const initialState = {
 }
 
 /**
+ * @typedef ActionPayload
+ * @property {String} type
+ * @param {*} data
+ */
+
+/**
  * Root reducer
  * @param {Object} state 
- * @param {Object} action 
- * @param {String} action.type
- * @param {*} action.data
+ * @param {ActionPayload} action 
  */
 function reduce(state = initialState, action) {
     const reducerFunc = reducers[action.type]
@@ -22,9 +26,7 @@ function reduce(state = initialState, action) {
 const reducers = {
     /**
      * @param {Object} state
-     * @param {Object} data
-     * @param {Object} data.name
-     * @param {Object} data.price
+     * @param {import('../actions/index.js').NewItemData} data
      */
     [actions.ADD_ITEM]: (state, data) => {
         return { ...state, listings: [ ...state.listings, data ] }
