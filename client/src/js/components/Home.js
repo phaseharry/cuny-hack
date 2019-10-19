@@ -3,12 +3,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem } from '../actions/index.js'
 import { Menu, Search } from 'semantic-ui-react'
 import styled from 'styled-components'
+import logo from '../../InstaPrice Logos/logo.png';
+
 
 const SearchWrapper = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 60px 10px;
+`
+const LogoStyle = styled.div`
+     display: flex;
+    justify-content: center;
+    align-items: center;
 `
 
 function Home() {
@@ -38,6 +45,9 @@ function Home() {
             Upcoming Events
             </Menu.Item>
         </Menu>
+        <LogoStyle>
+            <img src = {logo} width="150" height="150"></img>
+        </LogoStyle> 
         <SearchWrapper>
             <Search size='massive'
                 onResultSelect={(e, data) => {
