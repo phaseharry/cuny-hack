@@ -19,13 +19,18 @@ function Product() {
         if (data.length > 0) {
             return
         }
-        fetch('/api/foods/search?longitude=40.740582&latitude=73.984739&range=2').then(res => {
+        fetch('/api/foods/search?longitude=-73.984739&latitude=40.740582&range=2').then(res => {
             if (res.status !== 200) {
               throw new Error(`Non-200 status code ${res.status}`)
             }
             return res.json()
         }).then(data => {
-            setData(data)
+            console.log(data)
+            if (data.msg && data.msg.includes('No food')) {
+                return
+            } else {
+                setData(data)
+            }
         }).catch(console.error)
 
     })
