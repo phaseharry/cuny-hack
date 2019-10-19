@@ -7,107 +7,107 @@ const Food = require('./models/Food')
 
 const listOfFoods = [
   {
-    name: 'Lobster',
+    name: 'lobster',
     type: 'seafood'
   },
   {
-    name: 'Salmon',
+    name: 'salmon',
     type: 'seafood'
   },
   {
-    name: 'Herring',
+    name: 'herring',
     type: 'seafood'
   },
   {
-    name: 'Broccoli',
+    name: 'broccoli',
     type: 'vegetable'
   },
   {
-    name: 'Corn',
+    name: 'corn',
     type: 'vegetable'
   },
   {
-    name: 'Chicken',
+    name: 'chicken',
     type: 'meat'
   },
   {
-    name: 'Duck',
+    name: 'duck',
     type: 'meat'
   },
   {
-    name: 'Strawberries',
+    name: 'strawberries',
     type: 'fruit'
   },
   {
-    name: 'Blueberries',
+    name: 'blueberries',
     type: 'fruit'
   },
   {
-    name: 'Bananas',
+    name: 'bananas',
     type: 'fruit'
   },
   {
-    name: 'Blackberries',
+    name: 'blackberries',
     type: 'fruit'
   },
   {
-    name: 'Crabs',
+    name: 'crabs',
     type: 'seafood'
   },
   {
-    name: 'Coconut',
+    name: 'coconut',
     type: 'fruit'
   },
   {
-    name: 'Bok Choy',
+    name: 'bok choy',
     type: 'vegetable'
   },
   {
-    name: 'Lettuce',
+    name: 'lettuce',
     type: 'vegetable'
   },
   {
-    name: 'Pineapples',
+    name: 'pineapples',
     type: 'fruit'
   },
   {
-    name: 'Onions',
+    name: 'onions',
     type: 'vegetable'
   },
   {
-    name: 'Cauliflower',
+    name: 'cauliflower',
     type: 'vegetable'
   },
   {
-    name: 'Cabbage',
+    name: 'cabbage',
     type: 'vegetable'
   },
   {
-    name: 'Turnip',
+    name: 'turnip',
     type: 'vegetable'
   },
   {
-    name: 'Chives',
+    name: 'chives',
     type: 'vegetable'
   },
   {
-    name: 'Ginger',
+    name: 'ginger',
     type: 'vegetable'
   },
   {
-    name: 'Carrots',
+    name: 'carrots',
     type: 'vegetable'
   },
   {
-    name: 'Oranges',
+    name: 'oranges',
     type: 'fruit'
   },
   {
-    name: 'Lemons',
+    name: 'lemons',
     type: 'fruit'
   },
   {
-    name: 'Limes',
+    name: 'limes',
     type: 'fruit'
   }
 ]

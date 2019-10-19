@@ -10,16 +10,47 @@ const Food = require('../db/models/Food')
 */
 Router.get('/', (req, res, next) => {
   Food.find()
-  .then(foods => res.json(foods))
-  .catch(err => next(err))
+    .then(foods => res.json(foods))
+    .catch(err => next(err))
 })
 
 /*
-  @route          GET api/foods/search/:food/:latitutde/:longtitude/:range  // Turn into a query
+  @route          GET api/foods/search?
   @description    fetches a specific foods within a specified distance from you
   @access         public
 */
-Router.get('/api/foods/search/:food/:latitutde/:longtitude/:range ', (req, res, next) => {})
+Router.get('/search', async (req, res, next) => {
+  let { longitude, latitude, food, range } = req.query
+  // converting to type numb
+  range *= 1
+  longitude *= 1
+  latitude *= 1
+
+  try {
+    const foodData = await Food.find({
+      name: food,
+      longitude: {
+        $gte: longitude - range,
+        $lt: longitude + range
+      },
+      latitude: {
+        $gte: latitude - range,
+        $lt: latitude + range
+      }
+    })
+
+    if (foodData.length) {
+      res.status(200).json(foodData)
+    } else {
+      res.status(200).json({
+        msg: 'No food found within that range'
+      })
+    }
+
+  } catch (err) {
+    next(err)
+  }
+})
 
 /*
   @route          GET api/foods/search/:latitude/:longitude
@@ -33,7 +64,7 @@ Router.get('/search/:latitude/:longitude/:range', (req, res, next) => {
     longitude,
     range
   })
-}) 
+})
 
 /*
   @route          POST api/foods/
@@ -48,7 +79,7 @@ Router.post('/', [
 ], async (req, res, next) => {
 
   const errors = validationResult(req)
-  if(!errors.isEmpty()){
+  if (!errors.isEmpty()) {
     return res.status(422).json({ errors: errors.array() })
   }
 
@@ -59,20 +90,20 @@ Router.post('/', [
     latitude,
   } = req.body
 
-  try { 
+  try {
     const foodInstance = await Food.findOne({
       name,
       longitude,
       latitude
     })
-    // if the foodInstance matches all 3 params of name, long, and lat then we update the price with the newer price else we'll create a new distance
-    if(foodInstance){
+    // if the foodInstance matches all 3 params of name, long, and lat then we update the price with the newer price else we'll create a new instance
+    if (foodInstance) {
       foodInstance.price = price
       await foodInstance.save()
       return res.status(200).json(foodInstance)
     }
 
-    const newFoodInstance = new Food({ 
+    const newFoodInstance = new Food({
       name,
       price,
       longitude,
@@ -82,7 +113,7 @@ Router.post('/', [
     await newFoodInstance.save()
     res.status(201).json(newFoodInstance)
 
-  } catch(err){
+  } catch (err) {
     next(err)
   }
 })
