@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-// const mongoURI = require('config').get('mongoURI')
 
 /**
  * Connect to the mongo database
