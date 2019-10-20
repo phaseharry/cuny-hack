@@ -1,4 +1,4 @@
-# Cuny Hack
+# Cuny Hackathon 2019
 
 
 ### Installation
