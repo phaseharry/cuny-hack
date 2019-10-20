@@ -143,7 +143,7 @@ if(process.env.NODE_ENV === 'production'){
 const dropDbAndSeed = async () => {
   try {
     await mongoose.connect(mongoURI)
-    await mongoose.connection.dropDatabase()
+    await mongoose.connection.db.dropCollection('food')
     await mongoose.connect(mongoURI)
 
     for (let i = 0; i < 1000; i++) {
