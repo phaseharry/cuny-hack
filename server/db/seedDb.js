@@ -140,10 +140,11 @@ if(process.env.NODE_ENV === 'production'){
   mongoURI = 'mongodb://localhost:27017/devdb'
 }
 
+
 const dropDbAndSeed = async () => {
   try {
     await mongoose.connect(mongoURI)
-    await mongoose.connection.db.dropCollection('food')
+    await mongoose.connection.dropDatabase()
     await mongoose.connect(mongoURI)
 
     for (let i = 0; i < 1000; i++) {
