@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Menu, Input, Button, List } from 'semantic-ui-react'
 import styled from 'styled-components'
+import Map from './Map/MapContainer'
 
 const Centered = styled.div`
     display: flex;
@@ -29,7 +30,7 @@ function Product() {
         }
         fetch('/api/foods/search?longitude=-73.984739&latitude=40.740582&range=2').then(res => {
             if (res.status !== 200) {
-              throw new Error(`Non-200 status code ${res.status}`)
+                throw new Error(`Non-200 status code ${res.status}`)
             }
             return res.json()
         }).then(data => {
@@ -46,10 +47,10 @@ function Product() {
         <div>
             <Menu>
                 <Menu.Item name='home' onClick={e => history.push('/')}>
-                Home
+                    Home
                 </Menu.Item>
                 <Menu.Item name='categories'>
-                Categories
+                    Categories
                 </Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
@@ -85,6 +86,7 @@ function Product() {
                         </List.Item>
                     ))}
                 </List>
+              <Map listOfFood={filtered.length === 0 ? [] : filtered} />
             </ListWrapper>
         </div>
     )

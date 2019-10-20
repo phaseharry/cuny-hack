@@ -4,9 +4,6 @@ import styled from 'styled-components'
 import logo from '../../InstaPrice Logos/logo.png'
 import { useHistory } from 'react-router-dom'
 
-
-import Map from './Map'
-
 const SearchWrapper = styled.div`
     display: flex;
     justify-content: center;
@@ -26,7 +23,7 @@ const Title1 = styled.h1`
 
 function Home() {
     const history = useHistory()
-    const [ searchInputName, setSearchInputName ] = useState('')
+    const [searchInputName, setSearchInputName] = useState('')
     /** @type {String[]} */
     return <div>
         <LogoStyle>
@@ -40,7 +37,7 @@ function Home() {
                 if (e.key !== 'Enter') {
                     return
                 }
-                history.push({ pathname: `/product/${searchInputName}`})
+                history.push({ pathname: `/product/${searchInputName}` })
             }} />
         </SearchWrapper>
     </div>
