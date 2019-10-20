@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router-dom'
 import { Menu, Input, Button, Card } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Map from './Map/MapContainer'
-
+const MAX_PER_PAGE = 4
 const Centered = styled.div`
     display: flex;
     justify-content: center;
@@ -13,8 +13,8 @@ const ListWrapper = styled.div`
     display: flex;
     padding: 40px 60px;
     > div:first-child {
-        max-width: 500px;
         margin-right: 30px;
+        width: 350px;
     }
 `
 
@@ -36,6 +36,7 @@ function Product() {
     const [ search ] = useState('')
     const [ searchValue, setSearchValue ] = useState('')
     const [ gpsLocation, setGpsLocation ] = useState()
+    const [ currentPage, setCurrentPage ] = useState(0)
     const [ loading, setLoading ] = useState(true)
     const history = useHistory()
     const params = useParams()
@@ -43,6 +44,19 @@ function Product() {
     const productName = search || params.name
 
     const filtered = data.filter(item => item.name.toLowerCase() === productName.toLowerCase())
+    const pages = []
+    const tempPage = []
+    for (const item of filtered) {
+        tempPage.push(item)
+        if (tempPage.length >= MAX_PER_PAGE) {
+            pages.push([ ...tempPage ])
+            tempPage.length = 0
+        }
+    }
+    if (tempPage.length > 0) {
+        pages.push(tempPage)
+    }
+    console.log(pages)
 
     useEffect(() => {
         if (gpsLocation) {
@@ -80,22 +94,29 @@ function Product() {
             <h1>{productName}</h1>
         </Centered>
         <ListWrapper>
-        <Card.Group>
-            {filtered.map(item => (
-                <Card fluid key={item._id}>
-                    <Card.Content>
-                        <Card.Header>{item.name}</Card.Header>
-                        <Card.Meta style={{ breakWord: 'all' }}>Location: {item.latitude}, {item.longitude}</Card.Meta>
-                        <Card.Description>
-                        ${item.price}0
-                        </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                        <Button color='twitter' content='Directions' size='big' fluid onClick={e => window.open(`https://www.google.com/maps/dir/?api=1&origin=${formatCoordinatesForMaps(gpsLocation)}&destination=${formatCoordinatesForMaps(item)}`)} />
-                    </Card.Content>
-                </Card>
-            ))}
-        </Card.Group>
+            <div>
+                <Button.Group fluid style={{ marginBottom: '10px' }}>
+                    <Button size='large' disabled={currentPage <= 0} onClick={e => currentPage <= 0 ? null : setCurrentPage(currentPage - 1)}>Previous</Button>
+                    <Button.Or text={`${currentPage + 1}/${pages.length}`} />
+                    <Button size='large' disabled={currentPage + 1 >= pages.length} onClick={e => currentPage + 1 >= pages.length ? null : setCurrentPage(currentPage + 1)}>Next</Button>
+                </Button.Group>
+                <Card.Group>
+                    {(pages[currentPage] || []).map(item => (
+                        <Card fluid key={item._id}>
+                            <Card.Content>
+                                <Card.Header>{item.name}</Card.Header>
+                                <Card.Meta style={{ breakWord: 'all' }}>Location: {item.latitude}, {item.longitude}</Card.Meta>
+                                <Card.Description>
+                                ${item.price}0
+                                </Card.Description>
+                            </Card.Content>
+                            <Card.Content extra>
+                                <Button color='twitter' content='Directions' size='large' fluid onClick={e => window.open(`https://www.google.com/maps/dir/?api=1&origin=${formatCoordinatesForMaps(gpsLocation)}&destination=${formatCoordinatesForMaps(item)}`)} />
+                            </Card.Content>
+                        </Card>
+                    ))}
+                </Card.Group>
+            </div>
             { filtered.length === 0 ? <h2>No results available</h2> : <Map currentPos={gpsLocation} listOfFood={filtered.length === 0 ? [] : filtered} /> }
         </ListWrapper>
     </div>
