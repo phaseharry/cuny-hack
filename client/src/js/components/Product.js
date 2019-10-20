@@ -71,7 +71,7 @@ function Product() {
                 setData(data)
             }
         }).catch(console.error)
-    })
+    }, [ data.length, gpsLocation ])
 
     const bodyData = loading
         ? <LoaderWrapper><h1>Loading...</h1></LoaderWrapper>
@@ -82,7 +82,7 @@ function Product() {
         <ListWrapper>
             <List>
                 {filtered.map((item, index) => (
-                    <List.Item key={item._id} style={{ paddingBottom: '15px' }}>
+                    <List.Item key={item._id} style={{ paddingBottom: '15px', fontSize: '120%' }}>
                         <List.Icon name='marker' />
                         <List.Content>
                             <List.Header as='a'>{index}</List.Header>
@@ -103,7 +103,7 @@ function Product() {
 
     return (
         <div>
-            <Menu>
+            <Menu size='massive'>
                 <Menu.Item name='home' onClick={e => history.push('/')}>
                     Home
                 </Menu.Item>

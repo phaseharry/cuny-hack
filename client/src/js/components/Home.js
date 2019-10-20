@@ -27,7 +27,7 @@ function Home() {
     /** @type {String[]} */
     return <div>
         <LogoStyle>
-            <img src={logo} width="200" height="200"></img>
+            <img src={logo} width="300px" height="300px"></img>
         </LogoStyle>
         <Title1>
             What food are you looking for?
