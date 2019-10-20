@@ -1,11 +1,19 @@
 const mongoose = require('mongoose')
+// const mongoURI = require('config').get('mongoURI')
 
 /**
  * Connect to the mongo database
  * @param {import('express').Express} expressApp 
  */
+let mongoURI;
+if(process.env.NODE_ENV === 'production'){
+  mongoURI = process.env.MONGO_URI
+} else {
+  mongoURI = 'mongodb://localhost:27017/devdb'
+}
+
 const connectToDb = expressApp => {
-  mongoose.connect('mongodb://localhost:27017/devdb', {
+  mongoose.connect(mongoURI, {
     useNewUrlParser: true,
     useCreateIndex: true,
     useFindAndModify: false,

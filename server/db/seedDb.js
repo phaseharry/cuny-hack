@@ -133,11 +133,18 @@ const NEW_YORK_COORDINATES = {
   latitude: 40.746566
 }
 
+let mongoURI;
+if(process.env.NODE_ENV === 'production'){
+  mongoURI = process.env.MONGO_URI
+} else {
+  mongoURI = 'mongodb://localhost:27017/devdb'
+}
+
 const dropDbAndSeed = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/devdb')
+    await mongoose.connect(mongoURI)
     await mongoose.connection.dropDatabase()
-    await mongoose.connect('mongodb://localhost:27017/devdb')
+    await mongoose.connect(mongoURI)
 
     for (let i = 0; i < 1000; i++) {
       const randFood = listOfFoods[Math.floor(Math.random() * (listOfFoods.length - 0))]

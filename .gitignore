@@ -4,6 +4,8 @@
 
 # === Rule for dotfiles ===
 # Ignore all dotfiles.
+/config
+
 .*
 # Exclude specific dotfiles that we want to track.
 !deps/**/.*
