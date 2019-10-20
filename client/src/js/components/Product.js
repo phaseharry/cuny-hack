@@ -21,6 +21,7 @@ function Product() {
     const [ data, setData ] = useState([])
     const [ search ] = useState('')
     const [ searchValue, setSearchValue ] = useState('')
+    const [ gpsLocation, setGpsLocation ] = useState()
     const history = useHistory()
     const params = useParams()
     /** @type {String} */
@@ -29,10 +30,20 @@ function Product() {
     const filtered = data.filter(item => item.name.toLowerCase() === productName.toLowerCase())
 
     useEffect(() => {
-        if (data.length > 0) {
+        if (gpsLocation) {
             return
         }
-        fetch('/api/foods/search?longitude=-73.984739&latitude=40.740582&range=2').then(res => {
+        navigator.geolocation.getCurrentPosition(function(position) {
+            setGpsLocation(position.coords)
+        })
+    })
+    useEffect(() => {
+        if (data.length > 0 || !gpsLocation) {
+            return
+        }
+        // fetch('/api/foods/search?longitude=-73.984739&latitude=40.740582&range=2').then(res => {
+        fetch(`/api/foods/search?longitude=${gpsLocation.longitude}&latitude=${gpsLocation.latitude}&range=2`).then(res => {
+
             if (res.status !== 200) {
                 throw new Error(`Non-200 status code ${res.status}`)
             }
@@ -90,7 +101,7 @@ function Product() {
                         </List.Item>
                     ))}
                 </List>
-                { filtered.length === 0 ? <h2>No results available</h2> : <Map listOfFood={filtered.length === 0 ? [] : filtered} /> }
+                { filtered.length === 0 ? <h2>No results available</h2> : <Map currentPos={gpsLocation} listOfFood={filtered.length === 0 ? [] : filtered} /> }
             </ListWrapper>
         </div>
     )
