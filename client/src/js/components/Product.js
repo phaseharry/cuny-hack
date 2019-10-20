@@ -105,7 +105,7 @@ function Product() {
                     {(pages[currentPage] || []).map((item, index) => (
                         <Card fluid key={item._id}>
                             <Card.Content>
-                                <Card.Header>Result {index}</Card.Header>
+                                <Card.Header>Result {currentPage * MAX_PER_PAGE + index}</Card.Header>
                                 <Card.Meta style={{ breakWord: 'all' }}>Location: {item.latitude}, {item.longitude}</Card.Meta>
                                 <Card.Description>
                                 ${item.price}0
