@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 import { Menu, Input, Button, List } from 'semantic-ui-react'
 import styled from 'styled-components'
+import Map from './Map/MapContainer'
 
 const Centered = styled.div`
     display: flex;
@@ -12,8 +13,6 @@ const ListWrapper = styled.div`
     display: flex;
     padding: 40px 60px;
 `
-
-import Map from './Map/MapContainer'
 
 function Product() {
     const [ data, setData ] = useState([])
