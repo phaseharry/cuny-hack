@@ -21,13 +21,13 @@ class Map extends Component {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
         >
-          {listOfFood.map(foodInstance => {
+          {listOfFood.map((foodInstance, idx) => {
             return (
               <FoodMarker
                 key={foodInstance._id}
                 lat={foodInstance.latitude}
                 lng={foodInstance.longitude}
-                text={'A'}
+                text={idx + 1}
               />
             )
           })}

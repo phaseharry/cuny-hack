@@ -6,7 +6,7 @@ const FoodMarkerStyles = {
   height: 40,
   left: -40 / 2,
   right: -40 / 2,
-  border: '5px solid #f44336',
+  border: '5px solid #AFEEEE',
   borderRadius: 40,
   backgroundColor: 'white',
   textAlign: 'center',
@@ -18,12 +18,12 @@ const FoodMarkerStyles = {
 
 class FoodMarker extends Component {
   render() {
-    const { key } = this.props
+    const { text } = this.props
     return (
       <div
-        key={key}
         style={FoodMarkerStyles}
       >
+        {text}
       </div>
     )
   }

@@ -32,11 +32,11 @@ function formatCoordinatesForMaps(coordinates) {
 }
 
 function Product() {
-    const [ data, setData ] = useState([])
-    const [ search ] = useState('')
-    const [ searchValue, setSearchValue ] = useState('')
-    const [ gpsLocation, setGpsLocation ] = useState()
-    const [ loading, setLoading ] = useState(true)
+    const [data, setData] = useState([])
+    const [search] = useState('')
+    const [searchValue, setSearchValue] = useState('')
+    const [gpsLocation, setGpsLocation] = useState()
+    const [loading, setLoading] = useState(true)
     const history = useHistory()
     const params = useParams()
     /** @type {String} */
@@ -48,7 +48,7 @@ function Product() {
         if (gpsLocation) {
             return
         }
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             setGpsLocation(position.coords)
         })
     })
@@ -71,34 +71,34 @@ function Product() {
                 setData(data)
             }
         }).catch(console.error)
-    }, [ data.length, gpsLocation ])
+    }, [data.length, gpsLocation])
 
     const bodyData = loading
         ? <LoaderWrapper><h1>Loading...</h1></LoaderWrapper>
         : <div>
-        <Centered>
-            <h1>{productName}</h1>
-        </Centered>
-        <ListWrapper>
-        <Card.Group>
-            {filtered.map(item => (
-                <Card fluid key={item._id}>
-                    <Card.Content>
-                        <Card.Header>{item.name}</Card.Header>
-                        <Card.Meta style={{ breakWord: 'all' }}>Location: {item.latitude}, {item.longitude}</Card.Meta>
-                        <Card.Description>
-                        ${item.price}0
+            <Centered>
+                <h1>{productName}</h1>
+            </Centered>
+            <ListWrapper>
+                <Card.Group>
+                    {filtered.map((item, idx) => (
+                        <Card fluid key={item._id}>
+                            <Card.Content>
+                                <Card.Header>{`${idx + 1})`} {item.name}</Card.Header>
+                                <Card.Meta style={{ breakWord: 'all' }}>Location: {item.latitude}, {item.longitude}</Card.Meta>
+                                <Card.Description>
+                                    ${item.price}0
                         </Card.Description>
-                    </Card.Content>
-                    <Card.Content extra>
-                        <Button color='twitter' content='Directions' size='big' fluid onClick={e => window.open(`https://www.google.com/maps/dir/?api=1&origin=${formatCoordinatesForMaps(gpsLocation)}&destination=${formatCoordinatesForMaps(item)}`)} />
-                    </Card.Content>
-                </Card>
-            ))}
-        </Card.Group>
-            { filtered.length === 0 ? <h2>No results available</h2> : <Map currentPos={gpsLocation} listOfFood={filtered.length === 0 ? [] : filtered} /> }
-        </ListWrapper>
-    </div>
+                            </Card.Content>
+                            <Card.Content extra>
+                                <Button color='twitter' content='Directions' size='big' fluid onClick={e => window.open(`https://www.google.com/maps/dir/?api=1&origin=${formatCoordinatesForMaps(gpsLocation)}&destination=${formatCoordinatesForMaps(item)}`)} />
+                            </Card.Content>
+                        </Card>
+                    ))}
+                </Card.Group>
+                {filtered.length === 0 ? <h2>No results available</h2> : <Map currentPos={gpsLocation} listOfFood={filtered.length === 0 ? [] : filtered} />}
+            </ListWrapper>
+        </div>
 
     return (
         <div>
@@ -111,7 +111,7 @@ function Product() {
                 </Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Input placeholder='Search...' value={searchValue}  onChange={e => setSearchValue(e.target.value)} onKeyDown={e => {
+                        <Input placeholder='Search...' value={searchValue} onChange={e => setSearchValue(e.target.value)} onKeyDown={e => {
                             if (e.key === 'Enter') {
                                 history.push(`/product/${searchValue}`)
                                 setSearchValue('')
