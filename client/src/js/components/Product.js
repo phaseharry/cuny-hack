@@ -12,11 +12,14 @@ const Centered = styled.div`
 const ListWrapper = styled.div`
     display: flex;
     padding: 40px 60px;
+    > div:first-child {
+        font-size: 120%;
+    }
 `
 
 function Product() {
     const [ data, setData ] = useState([])
-    const [ search, setSearch ] = useState('')
+    const [ search ] = useState('')
     const [ searchValue, setSearchValue ] = useState('')
     const history = useHistory()
     const params = useParams()
@@ -24,6 +27,7 @@ function Product() {
     const productName = search || params.name
 
     const filtered = data.filter(item => item.name.toLowerCase() === productName.toLowerCase())
+
     useEffect(() => {
         if (data.length > 0) {
             return
@@ -56,12 +60,12 @@ function Product() {
                     <Menu.Item>
                         <Input placeholder='Search...' value={searchValue}  onChange={e => setSearchValue(e.target.value)} onKeyDown={e => {
                             if (e.key === 'Enter') {
-                                setSearch(searchValue)
+                                history.push(`/product/${searchValue}`)
                                 setSearchValue('')
                             }
                         }} />
                         <Button style={{ marginLeft: '5px' }} icon='search' onClick={e => {
-                            setSearch(searchValue)
+                            history.push(`/product/${searchValue}`)
                             setSearchValue('')
                         }} />
                     </Menu.Item>
@@ -72,11 +76,11 @@ function Product() {
             </Centered>
             <ListWrapper>
                 <List>
-                    {filtered.map(item => (
+                    {filtered.map((item, index) => (
                         <List.Item key={item._id}>
                             <List.Icon name='marker' />
                             <List.Content>
-                                <List.Header as='a'>Panda Express</List.Header>
+                                <List.Header as='a'>{index}</List.Header>
                                 <List.Description>
                                     Location: {item.latitude}, {item.longitude}
                                     <br />
@@ -86,7 +90,7 @@ function Product() {
                         </List.Item>
                     ))}
                 </List>
-              <Map listOfFood={filtered.length === 0 ? [] : filtered} />
+                { filtered.length === 0 ? <h2>No results available</h2> : <Map listOfFood={filtered.length === 0 ? [] : filtered} /> }
             </ListWrapper>
         </div>
     )

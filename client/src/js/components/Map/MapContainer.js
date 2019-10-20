@@ -16,7 +16,7 @@ class Map extends Component {
     const { listOfFood } = this.props
 
     return (
-      <div style={{ height: '100vh', width: '90%' }}>
+      <div style={{ height: '80vh', width: '90%' }}>
         <GoogleMapReact
           bootstrapURLKeys={{ key: process.env.REACT_APP_GMAPS_API_KEY }}
           defaultCenter={this.props.center}
@@ -25,7 +25,7 @@ class Map extends Component {
           {listOfFood.map(foodInstance => {
             return (
               <FoodMarker
-                key={foodInstance.id}
+                key={foodInstance._id}
                 lat={foodInstance.latitude}
                 lng={foodInstance.longitude}
                 text={foodInstance.name}
