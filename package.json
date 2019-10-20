@@ -9,7 +9,9 @@
     "client": "npm start --prefix client",
     "clientInstall": "npm install --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "seedData": "node server/db/seedDb.js"
+    "seedData": "node server/db/seedDb.js",
+    "postinstall": "npm run seedData",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
