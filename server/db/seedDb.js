@@ -109,12 +109,28 @@ const listOfFoods = [
   {
     name: 'limes',
     type: 'fruit'
+  },
+  {
+    name: 'chicken over rice',
+    type: 'street food'
+  },
+  {
+    name: 'lamb over rice',
+    type: 'street food'
+  },
+  {
+    name: 'combo over rice',
+    type: 'street food'
+  },
+  {
+    name: 'hotdog',
+    type: 'street food'
   }
 ]
 
 const NEW_YORK_COORDINATES = {
-  longitude: -74.0060,
-  latitude: 40.7128
+  longitude: -73.988212,
+  latitude: 40.746566
 }
 
 const dropDbAndSeed = async () => {
@@ -123,38 +139,10 @@ const dropDbAndSeed = async () => {
     await mongoose.connection.dropDatabase()
     await mongoose.connect('mongodb://localhost:27017/devdb')
 
-    const [harry, oscar, michael, matthew] = [
-      new User({
-        firstName: 'Harry',
-        lastName: 'C',
-        email: 'harryc@gmail.com',
-        password: '1234'
-      }),
-      new User({
-        firstName: 'Oscar',
-        lastName: 'C',
-        email: 'oscarc@gmail.com',
-        password: '1234'
-      }),
-      new User({
-        firstName: 'Michael',
-        lastName: 'T',
-        email: 'michaelt@gmail.com',
-        password: '1234'
-      }),
-      new User({
-        firstName: 'Matthew',
-        lastName: 'J',
-        email: 'matthewj@gmail.com',
-        password: '1234'
-      })
-    ]
-    await Promise.all([harry.save(), oscar.save(), michael.save(), matthew.save()])
-
-    for (let i = 0; i < 200; i++) {
+    for (let i = 0; i < 1000; i++) {
       const randFood = listOfFoods[Math.floor(Math.random() * (listOfFoods.length - 0))]
-      const latitudeRand = +((Math.random() * 10) - 5).toPrecision(9)
-      const longitudeRand = +((Math.random() * 10) - 5).toPrecision(9)
+      const latitudeRand = +((Math.random() * 0.03125) - 0.015625).toPrecision(9)
+      const longitudeRand = +((Math.random() * 0.03125) - 0.015625).toPrecision(9)
       const newFoodInstance = new Food({
         name: randFood.name,
         category: randFood.type,
