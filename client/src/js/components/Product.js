@@ -14,7 +14,7 @@ const ListWrapper = styled.div`
     padding: 40px 60px;
     > div:first-child {
         margin-right: 30px;
-        width: 350px;
+        max-width: 350px;
     }
 `
 
@@ -62,7 +62,7 @@ function Product() {
         if (gpsLocation) {
             return
         }
-        navigator.geolocation.getCurrentPosition(function (position) {
+        navigator.geolocation.getCurrentPosition(function(position) {
             setGpsLocation(position.coords)
         })
     })
@@ -85,7 +85,7 @@ function Product() {
                 setData(data)
             }
         }).catch(console.error)
-    }, [data.length, gpsLocation])
+    }, [ data.length, gpsLocation ])
 
     const bodyData = loading
         ? <LoaderWrapper><h1>Loading...</h1></LoaderWrapper>
@@ -95,16 +95,17 @@ function Product() {
         </Centered>
         <ListWrapper>
             <div>
-                <Button.Group fluid style={{ marginBottom: '10px' }}>
+                { !pages[currentPage] ? null : <Button.Group fluid style={{ marginBottom: '10px' }}>
                     <Button size='large' disabled={currentPage <= 0} onClick={e => currentPage <= 0 ? null : setCurrentPage(currentPage - 1)}>Previous</Button>
                     <Button.Or text={`${currentPage + 1}/${pages.length}`} />
                     <Button size='large' disabled={currentPage + 1 >= pages.length} onClick={e => currentPage + 1 >= pages.length ? null : setCurrentPage(currentPage + 1)}>Next</Button>
                 </Button.Group>
+                }
                 <Card.Group>
-                    {(pages[currentPage] || []).map(item => (
+                    {(pages[currentPage] || []).map((item, index) => (
                         <Card fluid key={item._id}>
                             <Card.Content>
-                                <Card.Header>{item.name}</Card.Header>
+                                <Card.Header>Result {index}</Card.Header>
                                 <Card.Meta style={{ breakWord: 'all' }}>Location: {item.latitude}, {item.longitude}</Card.Meta>
                                 <Card.Description>
                                 ${item.price}0
@@ -132,7 +133,7 @@ function Product() {
                 </Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Input placeholder='Search...' value={searchValue} onChange={e => setSearchValue(e.target.value)} onKeyDown={e => {
+                        <Input placeholder='Search...' value={searchValue}  onChange={e => setSearchValue(e.target.value)} onKeyDown={e => {
                             if (e.key === 'Enter') {
                                 history.push(`/product/${searchValue}`)
                                 setSearchValue('')
