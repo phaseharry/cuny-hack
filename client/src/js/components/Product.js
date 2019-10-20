@@ -62,7 +62,7 @@ function Product() {
         if (gpsLocation) {
             return
         }
-        navigator.geolocation.getCurrentPosition(function(position) {
+        navigator.geolocation.getCurrentPosition(function (position) {
             setGpsLocation(position.coords)
         })
     })
@@ -85,7 +85,7 @@ function Product() {
                 setData(data)
             }
         }).catch(console.error)
-    }, [ data.length, gpsLocation ])
+    }, [data.length, gpsLocation])
 
     const bodyData = loading
         ? <LoaderWrapper><h1>Loading...</h1></LoaderWrapper>
@@ -132,7 +132,7 @@ function Product() {
                 </Menu.Item>
                 <Menu.Menu position='right'>
                     <Menu.Item>
-                        <Input placeholder='Search...' value={searchValue}  onChange={e => setSearchValue(e.target.value)} onKeyDown={e => {
+                        <Input placeholder='Search...' value={searchValue} onChange={e => setSearchValue(e.target.value)} onKeyDown={e => {
                             if (e.key === 'Enter') {
                                 history.push(`/product/${searchValue}`)
                                 setSearchValue('')

@@ -6,13 +6,12 @@ import FoodMarker from './FoodMarker'
 class Map extends Component {
   static defaultProps = {
     center: {
-      lat: 40.743958,
-      lng: -73.990785
+      lat: 40.746566,
+      lng: -73.988212
     },
     zoom: 15
   }
   render() {
-    console.log(this.props)
     const { listOfFood } = this.props
 
     return (
@@ -22,22 +21,16 @@ class Map extends Component {
           defaultCenter={this.props.center}
           defaultZoom={this.props.zoom}
         >
-          {listOfFood.map(foodInstance => {
+          {listOfFood.map((foodInstance, idx) => {
             return (
               <FoodMarker
                 key={foodInstance._id}
                 lat={foodInstance.latitude}
                 lng={foodInstance.longitude}
-                text={foodInstance.name}
+                text={idx + 1}
               />
             )
           })}
-          {/* <div
-            lat={74}
-            lng={40.004}
-            text="marker"
-          >
-          </div> */}
         </GoogleMapReact>
       </div >)
   }
