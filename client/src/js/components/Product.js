@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Menu, Input, Button, List, Loader } from 'semantic-ui-react'
+import { Menu, Input, Button, Card } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Map from './Map/MapContainer'
 
@@ -13,8 +13,8 @@ const ListWrapper = styled.div`
     display: flex;
     padding: 40px 60px;
     > div:first-child {
-        font-size: 120%;
-        padding-right: 40px;
+        max-width: 500px;
+        margin-right: 30px;
     }
 `
 
@@ -80,23 +80,22 @@ function Product() {
             <h1>{productName}</h1>
         </Centered>
         <ListWrapper>
-            <List>
-                {filtered.map((item, index) => (
-                    <List.Item key={item._id} style={{ paddingBottom: '15px', fontSize: '120%' }}>
-                        <List.Icon name='marker' />
-                        <List.Content>
-                            <List.Header as='a'>{index}</List.Header>
-                            <List.Description>
-                                Location: {item.latitude}, {item.longitude}
-                                <br />
-                                Price: {item.price}
-                                <br /> <br />
-                                <Button color='twitter' content='Directions' size='big' fluid onClick={e => window.open(`https://www.google.com/maps/dir/?api=1&origin=${formatCoordinatesForMaps(gpsLocation)}&destination=${formatCoordinatesForMaps(item)}`)} />
-                            </List.Description>
-                        </List.Content>
-                    </List.Item>
-                ))}
-            </List>
+        <Card.Group>
+            {filtered.map(item => (
+                <Card fluid key={item._id}>
+                    <Card.Content>
+                        <Card.Header>{item.name}</Card.Header>
+                        <Card.Meta style={{ breakWord: 'all' }}>Location: {item.latitude}, {item.longitude}</Card.Meta>
+                        <Card.Description>
+                        ${item.price}0
+                        </Card.Description>
+                    </Card.Content>
+                    <Card.Content extra>
+                        <Button color='twitter' content='Directions' size='big' fluid onClick={e => window.open(`https://www.google.com/maps/dir/?api=1&origin=${formatCoordinatesForMaps(gpsLocation)}&destination=${formatCoordinatesForMaps(item)}`)} />
+                    </Card.Content>
+                </Card>
+            ))}
+        </Card.Group>
             { filtered.length === 0 ? <h2>No results available</h2> : <Map currentPos={gpsLocation} listOfFood={filtered.length === 0 ? [] : filtered} /> }
         </ListWrapper>
     </div>
