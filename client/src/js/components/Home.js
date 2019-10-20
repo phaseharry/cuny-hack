@@ -14,9 +14,14 @@ const SearchWrapper = styled.div`
     padding: 60px 10px;
 `
 const LogoStyle = styled.div`
+    padding-top : 10%;
     display: flex;
     justify-content: center;
     align-items: center;
+`
+const Title1 = styled.h1`
+    text-align: center;
+    
 `
 
 function Home() {
@@ -25,8 +30,11 @@ function Home() {
     /** @type {String[]} */
     return <div>
         <LogoStyle>
-            <img src={logo} width="150" height="150"></img>
+            <img src={logo} width="200" height="200"></img>
         </LogoStyle>
+        <Title1>
+            What food are you looking for?
+        </Title1>
         <SearchWrapper>
             <Input size='massive' onChange={e => setSearchInputName(e.target.value)} icon='search' placeholder='Search a Food' onKeyDown={e => {
                 if (e.key !== 'Enter') {
