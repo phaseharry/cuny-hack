@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
-import { Menu, Input, Button, List } from 'semantic-ui-react'
+import { Menu, Input, Button, List, Loader } from 'semantic-ui-react'
 import styled from 'styled-components'
 import Map from './Map/MapContainer'
 
@@ -14,14 +14,29 @@ const ListWrapper = styled.div`
     padding: 40px 60px;
     > div:first-child {
         font-size: 120%;
+        padding-right: 40px;
     }
 `
+
+const LoaderWrapper = styled(Centered)`
+    margin: 40px;
+`
+
+/**
+ * @param {Object} coordinates 
+ * @param {Number} coordinates.latitude
+ * @param {Number} coordinates.longitude
+ */
+function formatCoordinatesForMaps(coordinates) {
+    return coordinates ? `${coordinates.latitude},${coordinates.longitude}` : ''
+}
 
 function Product() {
     const [ data, setData ] = useState([])
     const [ search ] = useState('')
     const [ searchValue, setSearchValue ] = useState('')
     const [ gpsLocation, setGpsLocation ] = useState()
+    const [ loading, setLoading ] = useState(true)
     const history = useHistory()
     const params = useParams()
     /** @type {String} */
@@ -41,9 +56,9 @@ function Product() {
         if (data.length > 0 || !gpsLocation) {
             return
         }
-        // fetch('/api/foods/search?longitude=-73.984739&latitude=40.740582&range=2').then(res => {
+        setLoading(true)
         fetch(`/api/foods/search?longitude=${gpsLocation.longitude}&latitude=${gpsLocation.latitude}&range=2`).then(res => {
-
+            setLoading(false)
             if (res.status !== 200) {
                 throw new Error(`Non-200 status code ${res.status}`)
             }
@@ -57,6 +72,34 @@ function Product() {
             }
         }).catch(console.error)
     })
+
+    const bodyData = loading
+        ? <LoaderWrapper><h1>Loading...</h1></LoaderWrapper>
+        : <div>
+        <Centered>
+            <h1>{productName}</h1>
+        </Centered>
+        <ListWrapper>
+            <List>
+                {filtered.map((item, index) => (
+                    <List.Item key={item._id} style={{ paddingBottom: '15px' }}>
+                        <List.Icon name='marker' />
+                        <List.Content>
+                            <List.Header as='a'>{index}</List.Header>
+                            <List.Description>
+                                Location: {item.latitude}, {item.longitude}
+                                <br />
+                                Price: {item.price}
+                                <br /> <br />
+                                <Button color='twitter' content='Directions' size='big' fluid onClick={e => window.open(`https://www.google.com/maps/dir/?api=1&origin=${formatCoordinatesForMaps(gpsLocation)}&destination=${formatCoordinatesForMaps(item)}`)} />
+                            </List.Description>
+                        </List.Content>
+                    </List.Item>
+                ))}
+            </List>
+            { filtered.length === 0 ? <h2>No results available</h2> : <Map currentPos={gpsLocation} listOfFood={filtered.length === 0 ? [] : filtered} /> }
+        </ListWrapper>
+    </div>
 
     return (
         <div>
@@ -82,27 +125,7 @@ function Product() {
                     </Menu.Item>
                 </Menu.Menu>
             </Menu>
-            <Centered>
-                <h1>{productName}</h1>
-            </Centered>
-            <ListWrapper>
-                <List>
-                    {filtered.map((item, index) => (
-                        <List.Item key={item._id}>
-                            <List.Icon name='marker' />
-                            <List.Content>
-                                <List.Header as='a'>{index}</List.Header>
-                                <List.Description>
-                                    Location: {item.latitude}, {item.longitude}
-                                    <br />
-                                    Price: {item.price}
-                                </List.Description>
-                            </List.Content>
-                        </List.Item>
-                    ))}
-                </List>
-                { filtered.length === 0 ? <h2>No results available</h2> : <Map currentPos={gpsLocation} listOfFood={filtered.length === 0 ? [] : filtered} /> }
-            </ListWrapper>
+            {bodyData}
         </div>
     )
 }
