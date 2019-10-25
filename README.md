@@ -1,4 +1,4 @@
-# InstaPrice for Cuny Hackathon 2019 (Winner of Finance Track)
+# InstaPrice for CUNY Hackathon 2019 (Winner of Finance Track)
 
 ### Team
 Michael Tan, Oscar Chong, Harry Chen 
