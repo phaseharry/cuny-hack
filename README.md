@@ -1,5 +1,11 @@
-# Cuny Hackathon 2019
+# InstaPrice for Cuny Hackathon 2019 (Winner of Finance Track)
 
+### Team
+Michael Tan, Oscar Chong, Harry Chen 
+
+### Links
+- https://insta-price.herokuapp.com/
+- https://devpost.com/software/instaprice-97lmbo
 
 ### Installation
 - run `npm install` in the root directory to download server dependencies 
